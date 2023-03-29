@@ -11,68 +11,22 @@ args <- commandArgs(trailingOnly = TRUE)
 FILE <- args[1]
 REGION <- args[2]
 
-if(FILE != "ukbb"){
+covar <- as.data.frame(fread(paste0("/lustre03/project/6004655/COMMUN/runs/eyu8/data/HLA_typing/HIBAG/txt_data/", FILE, "/", FILE, "_covar.txt")))
 
-    covar <- as.data.frame(fread(paste0("/lustre03/project/6004655/COMMUN/runs/eyu8/data/HLA_typing/HIBAG/txt_data/", FILE, "/", FILE, "_covar.txt")))
-
-    A <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-A_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
-    B <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-B_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
-    C <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-C_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
-    DPB1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DPB1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
-    DQA1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DQA1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
-    DQB1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DQB1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
-    DRB1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DRB1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
-
-} else if(FILE == "ukbb" && REGION == "PD"){
-
-    PD <- as.data.frame(fread("/lustre03/project/6004655/COMMUN/runs/eyu8/data/ukbb_dagher/ukbb_PD_covar.txt"))
-    control_PD <- as.data.frame(fread("/lustre03/project/6004655/COMMUN/runs/eyu8/data/HLA_typing/HIBAG/ukbb/ukbb_control_PD_covar.txt"))
-
-    PD$phenotype <- 2
-    control_PD$phenotype <- 1
-
-    covar <- rbind(PD, control_PD)
-
-    A <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-A_ukbb_imp_HLA_Euro.csv"))
-    B <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-B_ukbb_imp_HLA_Euro.csv"))
-    C <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-C_ukbb_imp_HLA_Euro.csv"))
-    DPB1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DPB1_ukbb_imp_HLA_Euro.csv"))
-    DQA1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DQA1_ukbb_imp_HLA_Euro.csv"))
-    DQB1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DQB1_ukbb_imp_HLA_Euro.csv"))
-    DRB1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DRB1_ukbb_imp_HLA_Euro.csv"))
-
-
-} else if(FILE == "ukbb" && REGION == "Proxy"){
-
-    Proxy <- as.data.frame(fread("/lustre03/project/6004655/COMMUN/runs/eyu8/data/ukbb_dagher/ukbb_proxy_covar.txt"))
-    control_Proxy <- as.data.frame(fread("/lustre03/project/6004655/COMMUN/runs/eyu8/data/HLA_typing/HIBAG/ukbb/ukbb_control_proxy_covar.txt"))
-
-    Proxy$phenotype <- 2
-    control_Proxy$phenotype <- 1
-
-    covar <- rbind(Proxy, control_Proxy)
-
-    A <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-A_ukbb_imp_HLA_Euro.csv"))
-    B <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-B_ukbb_imp_HLA_Euro.csv"))
-    C <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-C_ukbb_imp_HLA_Euro.csv"))
-    DPB1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DPB1_ukbb_imp_HLA_Euro.csv"))
-    DQA1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DQA1_ukbb_imp_HLA_Euro.csv"))
-    DQB1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DQB1_ukbb_imp_HLA_Euro.csv"))
-    DRB1 <- as.data.frame(fread("ukbb_imp_HLA_Euro/HLA-DRB1_ukbb_imp_HLA_Euro.csv"))
-
-}
+A <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-A_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
+B <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-B_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
+C <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-C_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
+DPB1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DPB1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
+DQA1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DQA1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
+DQB1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DQB1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
+DRB1 <- read.csv(file=paste0("csv/", FILE, "_", REGION, "/HLA-DRB1_", FILE, "_", REGION, ".csv"), sep=",",stringsAsFactors=FALSE)
 
 HLA <- list(A=merge(covar,A),B=merge(covar,B),C=merge(covar,C),
             DPB1=merge(covar,DPB1),DQA1=merge(covar,DQA1),DQB1=merge(covar,DQB1),DRB1=merge(covar,DRB1))
 
-poorSamples <- lapply(HLA,function(x) x[x$prob<0.5,]$"sample.id")
-poorSamples <- unlist(poorSamples, use.names=FALSE)
-poorSamples <- poorSamples[duplicated(poorSamples)]
-filtered_HLA <- lapply(HLA,function(x) x[!(x$"sample.id" %in% poorSamples),])
-
 for(i in 1:7){
     message(paste0("Analysing HLA-",names(HLA)[i]))
-        hla_group <- filtered_HLA[[i]]
+    hla_group <- HLA[[i]]
     hla_group$phenotype[hla_group$phenotype == -9] <- NA
     hla_group$phenotype <- as.factor(hla_group$phenotype - 1)
     hla <- hlaAllele(hla_group$"sample.id", H1=hla_group$allele1, H2=hla_group$allele2, locus=names(HLA[i]), assembly="hg19", prob=hla_group$prob)
@@ -81,16 +35,13 @@ for(i in 1:7){
     hla_aa <- aa$value
     hla_aa_table <- summary(aa)
 
-    #Remove low prob
-    filtered_HLA_gene <- hla_aa[hla_aa$prob > 0.5,]
-
     #Increment position
     increment <- hla_aa_table[1,"Pos"] - 1
     hla_aa_table[,"Pos"] <- hla_aa_table[,"Pos"] - increment
 
     hla_pos <- hla_aa_table[,"Pos"]
-    HLA_allele1 <- filtered_HLA_gene[, c("sample.id","allele1")]
-    HLA_allele2 <- filtered_HLA_gene[, c("sample.id","allele2")]
+    HLA_allele1 <- HLA[, c("sample.id","allele1")]
+    HLA_allele2 <- HLA[, c("sample.id","allele2")]
     names(HLA_allele1) <- c("ID","allele")
     names(HLA_allele2) <- c("ID","allele")
     HLA_allele <- rbind(HLA_allele1, HLA_allele2)
