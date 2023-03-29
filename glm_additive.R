@@ -7,7 +7,7 @@ args <- commandArgs(trailingOnly = TRUE)
 FILE <- args[1]
 REGION <- args[2]
 
-#load data depending if its UKB or not
+#load data
 
 covar <- as.data.frame(fread(paste0("/lustre03/project/6004655/COMMUN/runs/eyu8/data/HLA_typing/HIBAG/txt_data/", FILE, "/", FILE, "_covar.txt")))
 
